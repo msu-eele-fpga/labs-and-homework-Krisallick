@@ -1,5 +1,5 @@
 # This is a Heading
-## This is also a Heading, but different and **Bold**
+**Bolding** doesn't work with headings apparently so here we are
 
 This is not a *blockquote*
 >this is a blockquote as I understand it
