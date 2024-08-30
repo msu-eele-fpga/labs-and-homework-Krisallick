@@ -18,6 +18,7 @@ void delay(){
 ```
 # Here is a git table
 | Command | Description |
+|----------|------------|
 | git branch <branch name>| creates a branch |
 | git switch <branch name>| switches to branch |
 | git status | List all new or modified files |
