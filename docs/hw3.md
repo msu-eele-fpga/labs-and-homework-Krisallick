@@ -4,15 +4,7 @@
 Created a 2-flip-flop synchronizer in VHDL
 
 ## Deliverables
-![HW3 Screenshot]()
+![HW3 Screenshot](https://raw.githubusercontent.com/msu-eele-fpga/labs-and-homework-Krisallick/hw-3/docs/assets/Synchronizer_Works.png?token=GHSAT0AAAAAACWTZ7XKNBICT52WNABICHO2ZWXLBZA)
 
 ### Questions 
-If the deliverables include questions you need to answer, put the answers here. Use blockquotes to indicate the question, then answer underneath the blockquote. Example formatting is shown below.
-
-> What is your favorite thing about SoC FPGAs?
-
-Everything!!!
-
-> What is the base address of your component? 
-
-0xDEADBEEF
+No questions were required
