@@ -43,7 +43,7 @@ input_gen: process is
 begin
 	wait for CLK_PERIOD*3;
 	input_tb<='1';
-	
+
 	wait for CLK_PERIOD*3;
 	input_tb<='0';
 
@@ -69,17 +69,21 @@ begin
 	wait for CLK_PERIOD/2;
 	pulse_expected<='0';
 	wait for CLK_PERIOD*2.5;
-
+	assert_eq(pulse_tb, pulse_expected, "TEST FAILED: Pulse is not correct for 3 clock cycles. Be better");
+	
 	wait for CLK_PERIOD*2;
 	pulse_expected<='1';
 	wait for CLK_PERIOD/2;
 	pulse_expected<='0';
 	wait for CLK_PERIOD*1.5;
+	assert_eq(pulse_tb, pulse_expected, "TEST FAILED: Pulse is not correct for 2 clock cycles. Be better");
 
 	wait for CLK_PERIOD*5;
 	pulse_expected<='1';
 	wait for CLK_PERIOD/2;
 	pulse_expected<='0';
 `	wait for CLK_PERIOD*5.5;
+	assert_eq(pulse_tb, pulse_expected, "TEST FAILED: Pulse is not correct for 5 clock cycles.  Be better");
+std.env.finish;
 end process;
 end architecture;
