@@ -36,8 +36,29 @@ architecture async_conditioner_arch of async_conditioner is
             pulse: out std_ulogic
         );
     end component;
-
+signal sync_to_debounce: std_ulogic;
+signal debounce_to_pulse: std_ulogic;
 begin
 
+    S1: Synchronizer
+        port map (
+            clk   => clk,
+            async => async,
+            sync  => sync_to_debounce
+        );
+    DB1: debouncer
+        port map (
+            clk   => clk,
+            rst => rst,
+            input => sync_to_debounce,
+            debounced => debounce_to_pulse
+        );
+    P1: one_pulse
+        port map (
+            clk   => clk,
+            rst => rst,
+            input=>debounce_to_pulse,
+            pulse=>sync
+        );
 
 end architecture;
