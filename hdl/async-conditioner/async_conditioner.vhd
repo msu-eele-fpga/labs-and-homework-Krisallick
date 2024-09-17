@@ -20,6 +20,9 @@ architecture async_conditioner_arch of async_conditioner is
         end component Synchronizer;
 
     component debouncer is
+        generic (
+            debounce_time: time
+        );
         port (
             clk: in std_ulogic;
             rst: in std_ulogic;
@@ -46,7 +49,11 @@ begin
             async => async,
             sync  => sync_to_debounce
         );
+
     DB1: debouncer
+	generic map(
+	    debounce_time=>20ns
+	)
         port map (
             clk   => clk,
             rst => rst,

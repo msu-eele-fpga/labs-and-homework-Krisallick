@@ -66,23 +66,23 @@ begin
 
 	wait for CLK_PERIOD*3;
 	pulse_expected<='1';
-	wait for CLK_PERIOD/2;
+	wait for CLK_PERIOD;
 	pulse_expected<='0';
-	wait for CLK_PERIOD*2.5;
+	wait for CLK_PERIOD*2;
 	assert_eq(pulse_tb, pulse_expected, "TEST FAILED: Pulse is not correct for 3 clock cycles. Be better");
 	
 	wait for CLK_PERIOD*2;
 	pulse_expected<='1';
-	wait for CLK_PERIOD/2;
+	wait for CLK_PERIOD;
 	pulse_expected<='0';
-	wait for CLK_PERIOD*1.5;
+	wait for CLK_PERIOD*1;
 	assert_eq(pulse_tb, pulse_expected, "TEST FAILED: Pulse is not correct for 2 clock cycles. Be better");
 
 	wait for CLK_PERIOD*5;
 	pulse_expected<='1';
-	wait for CLK_PERIOD/2;
+	wait for CLK_PERIOD;
 	pulse_expected<='0';
-`	wait for CLK_PERIOD*5.5;
+`	wait for CLK_PERIOD*5;
 	assert_eq(pulse_tb, pulse_expected, "TEST FAILED: Pulse is not correct for 5 clock cycles.  Be better");
 std.env.finish;
 end process;
