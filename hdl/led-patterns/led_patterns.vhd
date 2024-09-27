@@ -31,6 +31,19 @@ architecture led_patterns_arch of led_patterns is
             );
     end component;
 
+    component clk_generator is
+        port (
+            clk   : in std_ulogic;
+            rst : in std_ulogic;
+            cnt: in unsigned(29 downto 0);
+            eighth_base_rate:out std_ulogic;
+            quarter_base_rate: out std_ulogic;
+            half_base_rate: out std_ulogic;
+            twice_base_rate: out std_ulogic;
+            four_base_rate: out std_ulogic
+        );
+    end component;
+
 type State_Type is (pattern0, pattern1, pattern2, pattern3, pattern4);
 signal current_state, next_state : State_Type;
 signal P0_init: std_ulogic:='0'; --if high, we have completed our initial set up for Pattern0
@@ -61,6 +74,12 @@ signal timer_done: boolean;
 
 signal clockCounter: integer range 0 to 268435455;--ranging for using 28 bits and keep it positive
 
+signal eighth_clock: std_ulogic;
+signal quarter_clock: std_ulogic; 
+signal half_clock: std_ulogic; 
+signal twice_clock: std_ulogic; 
+signal four_clock: std_ulogic; 
+
 
 begin
 
@@ -69,16 +88,18 @@ period_base_clk_full_prec<= SYS_CLK_FREQ*base_period;
 --get rid of the fractional bits of SYS_CLK_FREQ * base_period so we have an int nmber of clock cycles for one second
 -- period_base_clk<= period_base_clk_full_prec(N_BITS_CLK_CYCLES_FULL-1 downto 4);--use for counters
 period_base_clk<=to_unsigned(4, 30); --FOR TESTING!!!
--- timer: timed_counter
--- generic map (
---     clk_period => 20 ns,	--20ns
---     count_time => 
--- )
--- port map (
---     clk   => clk,
---     enable=> timer_en,
---     done=> timer_done
--- );
+
+clk_gen: clk_generator
+    port map (
+        clk   => clk,
+        rst => rst,
+        cnt=>period_base_clk,
+        eighth_base_rate => eighth_clock,
+        quarter_base_rate => quarter_clock,
+        half_base_rate => half_clock,
+        twice_base_rate => twice_clock,
+        four_base_rate => four_clock
+    );
 -----------------------------------------------------------------------
     State_mem:process (clk)
     begin
