@@ -41,7 +41,7 @@ entity de10nano_top is
     --  when pressed (asserted)
     --  and produce a '1' in the rest (non-pushed) state
     ----------------------------------------
-    push_button_n : in    std_logic_vector(1 downto 0);
+    push_button_n : in    std_ulogic_vector(1 downto 0);
 
     ----------------------------------------
     --  Slide switch inputs (SW)
@@ -50,14 +50,14 @@ entity de10nano_top is
     --  in the down position
     --  (towards the edge of the board)
     ----------------------------------------
-    sw : in    std_logic_vector(3 downto 0);
+    sw : in    std_ulogic_vector(3 downto 0);
 
     ----------------------------------------
     --  LED outputs
     --  See DE10 Nano User Manual page 26
     --  Setting LED to 1 will turn it on
     ----------------------------------------
-    led : out   std_logic_vector(7 downto 0);
+    led : out   std_ulogic_vector(7 downto 0);
 
     ----------------------------------------
     --  GPIO expansion headers (40-pin)
@@ -79,10 +79,47 @@ entity de10nano_top is
 end entity de10nano_top;
 
 architecture de10nano_arch of de10nano_top is
+component led_patterns is
+  port (
+    clk : in std_ulogic;
+    rst : in std_ulogic;
+    push_button : in std_ulogic;
+    switches : in std_ulogic_vector(3 downto 0);
+    hps_led_control : in boolean;
+    base_period : in unsigned(7 downto 0); --4 int bits 4 frac bits
+    led_reg : in std_ulogic_vector(7 downto 0);
+    led : out std_ulogic_vector(7 downto 0):="00000000"
+  );
+end component;
+component async_conditioner is
+  port (
+    clk   : in std_ulogic;
+    rst : in std_ulogic;
+    async : in std_ulogic;
+    sync : out std_ulogic
+  );
+end component;
 
+signal clean_button: std_ulogic;
 begin
 
-  -- Add VDHL code to connect the four switches (SW) to four LEDs
-	LED(3 DOWNTO 0) <=SW(3 DOWNTO 0);
-	LED(4 DOWNTO 7) <= "0000";
+  button_conditi: entity work.async_conditioner
+   port map(
+      clk => fpga_clk1_50,
+      rst => not push_button_n(0),
+      async => not push_button_n(1),
+      sync => clean_button
+  );
+
+  patterns: led_patterns
+   port map(
+      clk => fpga_clk1_50,
+      rst => not push_button_n(0),
+      push_button =>not push_button_n(1),
+      switches => sw,
+      hps_led_control => false,
+      base_period => "00010000",
+      led_reg => "00000000",
+      led => led
+  );
 end architecture de10nano_arch;

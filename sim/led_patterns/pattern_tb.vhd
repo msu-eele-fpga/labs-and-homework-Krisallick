@@ -9,7 +9,7 @@ entity pattern_tb is
 end entity;
 
 architecture testbench of pattern_tb is
-component pattern3 is
+component pattern1 is
     port (
         clk   : in std_ulogic;
         rst : in std_ulogic;
@@ -26,7 +26,7 @@ begin
     
 clk_tb <= not clk_tb after CLK_PERIOD / 2;
 
-dut: pattern3
+dut: pattern1
     port map (
         clk   => clk_tb,
         rst => rst_tb,

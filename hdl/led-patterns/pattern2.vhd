@@ -14,7 +14,7 @@ architecture rtl of pattern2 is
 signal count: unsigned(6 downto 0):="0000000";
 begin
 
-process(clk)
+process(clk, rst)
 begin
     if (rst='1') then
         led<="0000000";
@@ -23,7 +23,7 @@ begin
             led<="0000000";
             count<="0000000";
         else
-            led<=To_Std_uLogic_Vector(std_logic_vector(count));
+            led<=(std_ulogic_vector(count));
             count<=count+1;
         end if;
         

@@ -14,7 +14,7 @@ architecture rtl of pattern4 is
 signal count: natural range 0 to 3:=0;
 begin
 
-process(clk)
+process(clk, rst)
 begin
     if (rst='1') then
         led<="0001000";

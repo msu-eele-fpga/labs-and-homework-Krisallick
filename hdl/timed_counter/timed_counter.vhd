@@ -17,7 +17,7 @@ end entity timed_counter;
 architecture timed_counter_arch of timed_counter is
 
 constant COUNTER_LIMIT : integer:= count_time/clk_period; --ex 40ns/20ns = 2
-signal clock_count: integer range 0 to 65535; --uses 16 bits instead of 32
+signal clock_count: integer range 0 to 268435455; --uses 28 bits instead of 32
 
 begin
 

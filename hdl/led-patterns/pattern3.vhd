@@ -14,7 +14,7 @@ architecture rtl of pattern3 is
 signal count: unsigned(6 downto 0):="1111111";
 begin
 
-process(clk)
+process(clk, rst)
 begin
     if (rst='1') then
         led<="1111111";
@@ -23,7 +23,7 @@ begin
             led<="1111111";
             count<="1111111";
         else
-            led<=To_Std_uLogic_Vector(std_logic_vector(count));
+            led<=(std_ulogic_vector(count));
             count<=count-1;
         end if;
         

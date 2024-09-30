@@ -57,4 +57,7 @@ begin
 
  clk_tb <= not clk_tb after CLK_PERIOD / 2;
 
+ switches_tb<="100";
+ push_button_tb<='1';
+
 end architecture;

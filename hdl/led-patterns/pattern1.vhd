@@ -12,21 +12,26 @@ end entity;
 
 architecture rtl of pattern1 is
 signal count: natural range 0 to 10:=0;
+signal led_mid: std_ulogic_vector(6 downto 0):="0000011";
 begin
 
-process(clk)
+process(clk, rst)
 begin
     if (rst='1') then
-        led<="0000011";
+        led_mid<="0000011";
     elsif (rising_edge(clk)) then
-        if count=6 then
-            led<="0000011";
+        if count=5  then
+            led_mid<="1000001";
+            count<=count+1;
+        elsif count=6 then
+            led_mid<="0000011";
             count<=0;
         else
-            led<=(led sll 1);
+            led_mid<=std_ulogic_vector(SHIFT_LEFT(unsigned(led_mid), 1));
             count<=count+1;
         end if;
         
     end if;
+    led<=led_mid;
 end process;
 end architecture;
