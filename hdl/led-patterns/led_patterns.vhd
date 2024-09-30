@@ -176,7 +176,7 @@ pattern3_inst: entity work.pattern3
 );
 pattern4_inst: entity work.pattern4
  port map(
-    clk => eighth_clock,
+    clk => four_clock,
     rst => rst,
     led => pattern4_out
 );

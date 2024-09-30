@@ -43,7 +43,7 @@ begin
     quarter_count<=shift_right(cnt, 2);
     half_count<=shift_right(cnt, 1);
     twice_count<=shift_left(cnt, 1);
-    four_count<=shift_left(cnt, 2);
+    four_count<=shift_right(cnt, 4);
 
     eighth:process (clk, counter1, eighth_out)
     begin
