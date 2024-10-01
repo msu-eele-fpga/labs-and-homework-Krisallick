@@ -52,7 +52,7 @@ begin
 
     DB1: debouncer
 	generic map(
-	    debounce_time=>20ns
+	    debounce_time=>100 ms
 	)
         port map (
             clk   => clk,
