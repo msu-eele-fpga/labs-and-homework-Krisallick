@@ -15,7 +15,3 @@ The state machine for this system can be set up a couple of different ways. My s
 
 ## Implementation Details of Custom Pattern
 For my custom LED pattern I decided to do a ripple pattern at a rate of 1/16 * base_rate. This starts with the center LED lit, then after 1/16 * base_rate it will split into two LEDs in each direction. After that, the two lit LEDs will move outwards every 1/16 * base_rate until no LEDs are available, then reset and repeat.
-
-
-
-
