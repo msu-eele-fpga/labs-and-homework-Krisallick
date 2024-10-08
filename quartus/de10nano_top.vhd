@@ -262,21 +262,25 @@ architecture de10nano_arch of de10nano_top is
       memory_mem_dm                   : out   std_logic_vector(3 downto 0);
       memory_oct_rzqin                : in    std_logic;
       clk_clk                         : in    std_logic;
-      reset_reset_n                   : in    std_logic
+      reset_reset_n                   : in    std_logic;
+      led_patterns_push_button        : in    std_logic                     := 'X';             -- push_button
+      led_patterns_switches           : in    std_logic_vector(3 downto 0)  := (others => 'X'); -- switches
+      led_patterns_led                : out   std_logic_vector(7 downto 0)                      -- led
+        
     );
   end component soc_system;
-component led_patterns is
-  port (
-    clk : in std_ulogic;
-    rst : in std_ulogic;
-    push_button : in std_ulogic;
-    switches : in std_ulogic_vector(3 downto 0);
-    hps_led_control : in boolean;
-    base_period : in unsigned(7 downto 0); --4 int bits 4 frac bits
-    led_reg : in std_ulogic_vector(7 downto 0);
-    led : out std_ulogic_vector(7 downto 0):="00000000"
-  );
-end component;
+-- component led_patterns is
+--   port (
+--     clk : in std_ulogic;
+--     rst : in std_ulogic;
+--     push_button : in std_ulogic;
+--     switches : in std_ulogic_vector(3 downto 0);
+--     hps_led_control : in boolean;
+--     base_period : in unsigned(7 downto 0); --4 int bits 4 frac bits
+--     led_reg : in std_ulogic_vector(7 downto 0);
+--     led : out std_ulogic_vector(7 downto 0):="00000000"
+--   );
+-- end component;
 component async_conditioner is
   port (
     clk   : in std_ulogic;
@@ -285,9 +289,12 @@ component async_conditioner is
     sync : out std_ulogic
   );
 end component;
-
+signal led_std: std_logic_vector(7 downto 0);
 signal clean_button: std_ulogic;
 begin
+  
+  led_std<=std_logic_vector(led_patterns_led);
+
 
   button_conditi: entity work.async_conditioner
    port map(
@@ -297,17 +304,17 @@ begin
       sync => clean_button
   );
 
-  patterns: led_patterns
-   port map(
-      clk => fpga_clk1_50,
-      rst => not push_button_n(0),
-      push_button =>not push_button_n(1),
-      switches => sw,
-      hps_led_control => false,
-      base_period => "00010000",
-      led_reg => "00000000",
-      led => led
-  );
+  -- patterns: led_patterns
+  --  port map(
+  --     clk => fpga_clk1_50,
+  --     rst => not push_button_n(0),
+  --     push_button =>not push_button_n(1),
+  --     switches => sw,
+  --     hps_led_control => false,
+  --     base_period => "00010000",
+  --     led_reg => "00000000",
+  --     led => led
+  -- );
   u0 : component soc_system
     port map (
       -- ethernet
@@ -391,6 +398,8 @@ begin
       memory_oct_rzqin   => hps_ddr3_rzq,
 
       clk_clk       => fpga_clk1_50,
-      reset_reset_n =>  not push_button_n(0)-- hook up to your reset signal; note that reset_reset_n is *active-low*
-    );
+      reset_reset_n =>  std_logic(not push_button_n(0)),-- hook up to your reset signal; note that reset_reset_n is *active-low*
+      led_patterns_push_button =>std_logic(not push_button_n(1)),
+      led_patterns_switches=>std_logic_vector(sw),
+      led_patterns_led =>led
 end architecture de10nano_arch;
