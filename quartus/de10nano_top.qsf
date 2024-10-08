@@ -269,27 +269,12 @@ set_location_assignment PIN_W20 -to sw[3]
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name VHDL_FILE ../hdl/timed_counter/timed_counter.vhd
-set_global_assignment -name VHDL_FILE ../hdl/synchronizer/Synchronizer.vhd
-set_global_assignment -name VHDL_FILE ../hdl/clk_generator/clk_generator.vhd
-set_global_assignment -name VHDL_FILE "../hdl/async-conditioner/one_pulse.vhd"
-set_global_assignment -name VHDL_FILE "../hdl/async-conditioner/debouncer.vhd"
-set_global_assignment -name VHDL_FILE "../hdl/async-conditioner/async_conditioner.vhd"
-set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern4.vhd"
-set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern3.vhd" -hdl_version VHDL_2008
-set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern2.vhd"
-set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern1.vhd"
-set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern0.vhd"
-set_global_assignment -name VHDL_FILE "../hdl/led-patterns/led_patterns.vhd"
-set_global_assignment -name VHDL_FILE de10nano_top.vhd
-set_global_assignment -name SDC_FILE de10nano.sdc
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name VHDL_INPUT_VERSION VHDL_1993
 set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
 set_global_assignment -name ENABLE_SIGNALTAP ON
 set_global_assignment -name USE_SIGNALTAP_FILE "lab-5_signal_tap.stp"
-set_global_assignment -name SIGNALTAP_FILE "lab-5_signal_tap.stp"
 set_global_assignment -name SLD_NODE_CREATOR_ID 110 -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_ENTITY_NAME sld_signaltap -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_RAM_BLOCK_TYPE=AUTO" -section_id auto_signaltap_0
@@ -449,5 +434,20 @@ set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[28] -
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[29] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[31] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_IN_ENABLED=1" -section_id auto_signaltap_0
-set_global_assignment -name SLD_FILE "db/lab-5_signal_tap_auto_stripped.stp"
+set_global_assignment -name VHDL_FILE ../hdl/timed_counter/timed_counter.vhd
+set_global_assignment -name VHDL_FILE ../hdl/synchronizer/Synchronizer.vhd
+set_global_assignment -name VHDL_FILE ../hdl/clk_generator/clk_generator.vhd
+set_global_assignment -name VHDL_FILE "../hdl/async-conditioner/one_pulse.vhd"
+set_global_assignment -name VHDL_FILE "../hdl/async-conditioner/debouncer.vhd"
+set_global_assignment -name VHDL_FILE "../hdl/async-conditioner/async_conditioner.vhd"
+set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern4.vhd"
+set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern3.vhd" -hdl_version VHDL_2008
+set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern2.vhd"
+set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern1.vhd"
+set_global_assignment -name VHDL_FILE "../hdl/led-patterns/pattern0.vhd"
+set_global_assignment -name VHDL_FILE "../hdl/led-patterns/led_patterns.vhd"
+set_global_assignment -name VHDL_FILE de10nano_top.vhd
+set_global_assignment -name SDC_FILE de10nano.sdc
+set_global_assignment -name SIGNALTAP_FILE "lab-5_signal_tap.stp"
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name SLD_FILE "db/lab-5_signal_tap_auto_stripped.stp"
