@@ -263,9 +263,9 @@ architecture de10nano_arch of de10nano_top is
       memory_oct_rzqin                : in    std_logic;
       clk_clk                         : in    std_logic;
       reset_reset_n                   : in    std_logic;
-      led_patterns_push_button        : in    std_logic                     := 'X';             -- push_button
+      led_patterns_led                : out   std_ulogic_vector(7 downto 0);                     -- led
       led_patterns_switches           : in    std_logic_vector(3 downto 0)  := (others => 'X'); -- switches
-      led_patterns_led                : out   std_logic_vector(7 downto 0)                      -- led
+      led_patterns_push_button        : in    std_logic                     := 'X'              -- push_button
         
     );
   end component soc_system;
@@ -293,7 +293,6 @@ signal led_std: std_logic_vector(7 downto 0);
 signal clean_button: std_ulogic;
 begin
   
-  led_std<=std_logic_vector(led_patterns_led);
 
 
   button_conditi: entity work.async_conditioner
@@ -398,8 +397,9 @@ begin
       memory_oct_rzqin   => hps_ddr3_rzq,
 
       clk_clk       => fpga_clk1_50,
-      reset_reset_n =>  std_logic(not push_button_n(0)),-- hook up to your reset signal; note that reset_reset_n is *active-low*
+      reset_reset_n =>  std_logic(push_button_n(0)),-- hook up to your reset signal; note that reset_reset_n is *active-low*
       led_patterns_push_button =>std_logic(not push_button_n(1)),
       led_patterns_switches=>std_logic_vector(sw),
       led_patterns_led =>led
+    );
 end architecture de10nano_arch;

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="soc_system" kind="soc_system" version="1.0" fabric="QSYS">
  <!-- Format version 23.1 991 (Future versions may contain additional information.) -->
- <!-- 2024.10.08.10:21:29 -->
+ <!-- 2024.10.10.11:44:43 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1728404489</value>
+  <value>1728582283</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -71751,7 +71751,7 @@ parameters are a RESULT of the module parameters. -->
    <type>clock</type>
    <isStart>false</isStart>
    <port>
-    <name>clock_sink_clk</name>
+    <name>clk</name>
     <direction>Input</direction>
     <width>1</width>
     <role>clk</role>
@@ -71796,7 +71796,7 @@ parameters are a RESULT of the module parameters. -->
    <type>reset</type>
    <isStart>false</isStart>
    <port>
-    <name>reset_sink_reset</name>
+    <name>rst</name>
     <direction>Input</direction>
     <width>1</width>
     <role>reset</role>
@@ -71841,6 +71841,12 @@ parameters are a RESULT of the module parameters. -->
    <type>conduit</type>
    <isStart>false</isStart>
    <port>
+    <name>led</name>
+    <direction>Output</direction>
+    <width>8</width>
+    <role>led</role>
+   </port>
+   <port>
     <name>push_button</name>
     <direction>Input</direction>
     <width>1</width>
@@ -71851,12 +71857,6 @@ parameters are a RESULT of the module parameters. -->
     <direction>Input</direction>
     <width>4</width>
     <role>switches</role>
-   </port>
-   <port>
-    <name>led</name>
-    <direction>Output</direction>
-    <width>8</width>
-    <role>led</role>
    </port>
   </interface>
  </module>

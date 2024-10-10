@@ -31,7 +31,7 @@ entity led_patterns_avalon is
                 push_button : in std_ulogic;
                 switches : in std_ulogic_vector(3 downto 0);
                 hps_led_control : in boolean;
-                base_period : in unsigned(7 downto 0); --4 int bits 4 frac bits
+                base_period : in unsigned(7 downto 0):="00010000"; --4 int bits 4 frac bits
                 led_reg : in std_ulogic_vector(7 downto 0);
                 led : out std_ulogic_vector(7 downto 0):="00000000"
             );
@@ -51,7 +51,7 @@ entity led_patterns_avalon is
             port map (
                 clk   => clk,
                 rst => rst,
-                hps_led_control=>true,
+                hps_led_control=>false,
                 push_button=>push_button,
                 switches=>switches(3 downto 0),
                 base_period=>unsigned(base_period(7 downto 0)),
@@ -75,7 +75,7 @@ entity led_patterns_avalon is
         begin
             if (rst='1') then
                 hps_led_control <= (others => '0');
-                base_period <= (others => '0');
+                base_period <= "00000000000000000000000000010000";
                 led_reg <= (others => '0');
             elsif rising_edge(clk) and avs_write='1' then
                 case avs_address is
