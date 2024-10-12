@@ -84,7 +84,7 @@ architecture led_patterns_arch of led_patterns is
         );
     end component;
 
-type State_Type is (display, patternS0, patternS1, patternS2, patternS3, patternS4);
+type State_Type is (display, patternS0, patternS1, patternS2, patternS3, patternS4, softwareS0);
 signal current_state: State_type:=display;
 signal next_state, prev_state : State_Type;
 signal P0_init: std_ulogic:='0'; --if high, we have completed our initial set up for Pattern0
@@ -199,6 +199,7 @@ State_mem:process (clk)
                 --reset conditions
             elsif hps_led_control then
                 --code to let the lEDs be controlled by software
+                current_state<=softwareS0;
             elsif(hps_led_control=false) then
                 --code to let the LEDs be controlled by state machines
                 current_state<=next_state;
@@ -252,6 +253,7 @@ begin
         when patternS4 =>   led(6 downto 0)<=pattern4_out;
                             timer_en<=false;
                             prev_state<=current_state;
+        when softwareS0 => led(6 downto 0)<=led_reg(6 downto 0);
         when others=>null;
     end case;
 end process;

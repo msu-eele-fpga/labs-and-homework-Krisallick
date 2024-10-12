@@ -43,15 +43,24 @@ entity led_patterns_avalon is
         signal base_period : std_logic_vector(31 downto 0) := "00000000000000000000000000010000"; --4 frac bits, 28 integer bits
         signal led_reg : std_logic_vector(31 downto 0) := (others => '0');
         
-
+        --End Registers
+        signal hps_led_control_switcheroo: boolean:=false;
 
     begin
+        bool: process(hps_led_control)
+        begin
+            if (hps_led_control(0)='1') then
+                hps_led_control_switcheroo<=true;
+            else
+                hps_led_control_switcheroo<=false;
+            end if;
+        end process;
 
         led_patt: led_patterns
             port map (
                 clk   => clk,
                 rst => rst,
-                hps_led_control=>false,
+                hps_led_control=>hps_led_control_switcheroo,
                 push_button=>push_button,
                 switches=>switches(3 downto 0),
                 base_period=>unsigned(base_period(7 downto 0)),
