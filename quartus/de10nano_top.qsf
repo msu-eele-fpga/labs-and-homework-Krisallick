@@ -970,5 +970,5 @@ set_global_assignment -name VHDL_FILE "../hdl/led-patterns/led_patterns.vhd"
 set_global_assignment -name VHDL_FILE de10nano_top.vhd
 set_global_assignment -name SDC_FILE de10nano.sdc
 set_global_assignment -name SIGNALTAP_FILE "lab-5_signal_tap.stp"
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name SLD_FILE "db/lab-5_signal_tap_auto_stripped.stp"
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
