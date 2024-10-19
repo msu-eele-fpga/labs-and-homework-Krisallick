@@ -1,0 +1,17 @@
+assets/
+hw2.md
+hw3.md
+hw4.md
+hw5.md
+hw6.md
+hw7.md
+lab1.md
+lab4.md
+lab5.md
+lab6.md
+lab7.md
+output.txt
+readme.md
+style-guides/
+submission-template.md
+workflow.md
