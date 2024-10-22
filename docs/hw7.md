@@ -54,7 +54,7 @@ In this assignment we practiced a multitude of linux commands.
 <reg><img src="assets//hw7_screenshots/question_15.png">
 
 ### Question 16
-`grep -P '.(ot)|.(ower)|.(mile)' fpgas.txt`
+`grep -P '.(ot)|.(ower)|.(ile)' fpgas.txt`
 <reg><img src="assets//hw7_screenshots/question_16.png">
 
 ### Question 17
