@@ -34,6 +34,8 @@ uint32_t *page_virtual_addr;
 uint32_t offset_in_page;
 volatile uint32_t *target_virtual_addr;
 uint32_t VALUE;
+size_t PAGE_SIZE;
+int fd;
 //-------------------
 
 
@@ -56,10 +58,10 @@ void address(int reg)     //sets address to the input register, i.e. address(1) 
       }
   // printf("Printing temp: %s\n", temp);
   ADDRESS = strtoul(temp, NULL, 0); //converting a string to unsigned long int setting ADDRESS to Register 2 which is led
-  // page_aligned_addr = ADDRESS & ~(PAGE_SIZE-1);  
-  // // *page_virtual_addr= (uint32_t *)mmap(NULL, PAGE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, page_aligned_addr);
-  // offset_in_page = ADDRESS & (PAGE_SIZE-1);
-  // target_virtual_addr = page_virtual_addr + offset_in_page/sizeof(uint32_t*);
+  page_aligned_addr = ADDRESS & ~(PAGE_SIZE-1);  
+  uint32_t *page_virtual_addr= (uint32_t *)mmap(NULL, PAGE_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, page_aligned_addr);
+  offset_in_page = ADDRESS & (PAGE_SIZE-1);
+  target_virtual_addr = page_virtual_addr + offset_in_page/sizeof(uint32_t*);
 }
 
 void softwareMode(void)     //writes a 1 to register 0 switching FPGA to software mode
@@ -118,7 +120,7 @@ int main(int argc, char **argv)
 {
   // ADDRESS = strtoul("0xFF200000", NULL, 0); //converting a string to unsigned long int setting ADDRESS to Register 2 which is led
   //this is the size of a page of memory in the system. Typically 4096 bytes.
-  size_t PAGE_SIZE = sysconf(_SC_PAGE_SIZE);
+  PAGE_SIZE = sysconf(_SC_PAGE_SIZE);
   
 
   if(argc==1)
@@ -131,11 +133,11 @@ int main(int argc, char **argv)
   }
   
     // open the /dev/mem file, which is an image of the main system memory.
-    // int fd=open("/dev/mem", O_RDWR | O_SYNC);
-    // if(fd==-1){     
-    //     fprintf(stderr, "failed to open /dev/mem.\n");
-    //     return 1;
-    // }
+    fd=open("/dev/mem", O_RDWR | O_SYNC);
+    if(fd==-1){     
+        fprintf(stderr, "failed to open /dev/mem.\n");
+        return 1;
+    }
 
 //----------arguement checking, using getopt
  while ((command = getopt (argc, argv, "hvf:p:")) != -1)
@@ -180,7 +182,7 @@ int main(int argc, char **argv)
 
   if (pattern)
   {
-    // softwareMode();
+    softwareMode();
     
     address(2);         //addressing the led_register
 
@@ -217,8 +219,8 @@ int main(int argc, char **argv)
             printf("  Display Time=%d msec\n", pvalue_uns[i+1]);
           }
 
-          // VALUE = pvalue_uns[i];        
-          // *target_virtual_addr = VALUE; //write value to the hardware memory address
+          VALUE = pvalue_uns[i];        
+          *target_virtual_addr = VALUE; //write value to the hardware memory address
 
           usleep(pvalue_uns[i+1]*1000); //pvalue_uns is in ms, but usleep takes in microseconds, so *1000
           i++;
@@ -229,7 +231,7 @@ int main(int argc, char **argv)
 
   if(file)
   {
-    // softwareMode();
+    softwareMode();
     address(2);   //access register 2
     char fileName[50];
     for(i=0; i<20; i++)
@@ -260,7 +262,7 @@ int main(int argc, char **argv)
         }
 
         VALUE = strtoul(patternArr, NULL, 0);        
-        // *target_virtual_addr = VALUE; //write value to the hardware memory address
+        *target_virtual_addr = VALUE; //write value to the hardware memory address
         if(verbose)
         {
               printf("LED pattern= ");
@@ -273,7 +275,8 @@ int main(int argc, char **argv)
       // printf("pattern is: %s\n", patternArr);
       // printf("pattern sent is: 0x%X\n", VALUE);
       // printf("time is: %s\n", time);
-
+      
     }
+    hardwareMode();
   }
 }
