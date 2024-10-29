@@ -13,14 +13,19 @@ led [Option]...[Pattern] [Time]\n");
    [Pattern] The hex value to display (0x55)\n");
    [Time] The display time in milliseconds for that hex value (500)\n");
    ```
+   
    ### Usage examples
-   All examples will use the verbose argument otherwise nothing can be seen.
+   All examples will use the verbose argument otherwise nothing can be seen. Notice that when using -p you can end the stream by using a keyboard interrupt (ctrl+C).
 
    Pattern Example: `./led -v -p 0x01 500 0x02 1000 0x03 300`
 
-   File Example: `./led -v -f patterns.txt`
+<screenshot> <img src="../../docs/assets/led_C_example1.png">
 
-   ## Building
+   File Example: `./led -v -f patterns.txt`
+   
+<ex2><img src="../../docs/assets/led_C_example2.png">
+
+## Building
    Since this program is made for an the Cyclone V we need to cross compile into a 32-bit ARM program file. Also since, as of now, we have been putting this program on an SD card to run we have to cross compile with the `-static` flag. Also note that the building of this code will only work if done in a linux based system when done in this manner, either a VM or otherwise.
 
 To cross compile: 
