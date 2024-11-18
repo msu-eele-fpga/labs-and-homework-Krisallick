@@ -54,7 +54,7 @@ PWMClock_full<=periodClocksFull*duty_cycle;--counter for how long to stay high
 PWMClocks<=PWMClock_full((periodClocksBitsFull+W_DUTY_CYCLE)-1 downto 23);
 
 
-outGen: process (all)
+outGen: process (clk)
 begin
     if rst='1' then
         counter<=(others => '0');
